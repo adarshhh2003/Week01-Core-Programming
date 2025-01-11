@@ -1,37 +1,47 @@
 import java.util.Scanner;
 
 public class BMICalculator {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Input: Take weight and height from the user
-        System.out.print("Enter weight (in kg): ");
-        double weight = scanner.nextDouble();
+        System.out.print("Enter the number of persons: ");
+        int numPersons = scanner.nextInt();
 
-        System.out.print("Enter height (in cm): ");
-        double heightCm = scanner.nextDouble();
+        double[] heights = new double[numPersons];
+        double[] weights = new double[numPersons];
+        double[] bmis = new double[numPersons];
+        String[] statuses = new String[numPersons];
 
-        // Convert height from cm to meters
-        double heightM = heightCm / 100;
+        // Input height and weight for each person
+        for (int i = 0; i < numPersons; i++) {
+            System.out.print("Enter height (in meters) for person " + (i + 1) + ": ");
+            heights[i] = scanner.nextDouble();
 
-        // Calculate BMI
-        double bmi = weight / (heightM * heightM);
-
-        // Determine the weight status based on BMI
-        String status;
-        if (bmi <= 18.4) {
-            status = "Underweight";
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
-            status = "Normal";
-        } else if (bmi >= 25.0 && bmi <= 39.9) {
-            status = "Overweight";
-        } else {
-            status = "Obese";
+            System.out.print("Enter weight (in kg) for person " + (i + 1) + ": ");
+            weights[i] = scanner.nextDouble();
         }
 
-        // Output the result
-        System.out.printf("BMI: %.2f\n", bmi);
-        System.out.println("Weight Status: " + status);
+        // Calculate BMI and determine status
+        for (int i = 0; i < numPersons; i++) {
+            bmis[i] = weights[i] / (heights[i] * heights[i]);
+
+            if (bmis[i] <= 18.4) {
+                statuses[i] = "Underweight";
+            } else if (bmis[i] <= 24.9) {
+                statuses[i] = "Normal";
+            } else if (bmis[i] <= 39.9) {
+                statuses[i] = "Overweight";
+            } else {
+                statuses[i] = "Obese";
+            }
+        }
+
+        // Display the results
+        System.out.println("\nHeight\tWeight\tBMI\tStatus");
+        for (int i = 0; i < numPersons; i++) {
+            System.out.printf("%.2f\t%.2f\t%.2f\t%s\n", heights[i], weights[i], bmis[i], statuses[i]);
+        }
 
         scanner.close();
     }
